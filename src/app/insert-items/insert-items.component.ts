@@ -102,6 +102,11 @@ export class InsertItemsComponent implements OnInit {
 
       this.app.POST_METHOD("handle/obj/", this.attributes).subscribe((response:any) => {
          console.log(response);
+         if(response.answer){
+           this.onCancel();
+         }else {
+           alert("Error Saving");
+         }
       });
 
   }
