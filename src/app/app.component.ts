@@ -13,7 +13,7 @@ export class AppComponent {
   ldShow: boolean = true;
   title = 'app';
   onTogglePanel: boolean = true;
-  isMobile: boolean = false;
+  isMobile: boolean = true;
   isHttps: boolean = false;
   selectLayer: string = "";
   zoomOptions: any = null;
