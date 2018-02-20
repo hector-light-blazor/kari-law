@@ -19,6 +19,7 @@ import {AppService} from "./app.service";
 import {PanelService} from "./panel.service";
 import { RemoveSpacesPipe } from './remove-spaces.pipe';
 import { DisclaimerMessageBoxComponent } from './disclaimer-message-box/disclaimer-message-box.component';
+import { InsertItemsComponent } from './insert-items/insert-items.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DisclaimerMessageBoxComponent } from './disclaimer-message-box/disclaim
     LocationPanelComponent,
     LayersPanelComponent,
     RemoveSpacesPipe,
-    DisclaimerMessageBoxComponent
+    DisclaimerMessageBoxComponent,
+    InsertItemsComponent
   ],
   imports: [
     BrowserModule,
