@@ -1,0 +1,19 @@
+<div id="omnibox"  [style.marginLeft]="isMbl">
+    <div class="left" style="width: 36px;">
+      <button (click)="onTglPanel()" class="fkeBtn" >
+          <span style="font-size: 20px; color: gray;" class="glyphicon glyphicon-menu-hamburger"></span>
+      </button>
+
+    </div>
+    <div class="left inbox">
+        <ng2-completer [(ngModel)]="searchAddress" (keyup)="onEnterSearch($event)" (keyup.enter)="onSelectedSearch($event)"  (selected)="onSelectedSearch($event)" placeholder="Search 9-1-1 Database"  [datasource]="dataService" [minSearchLength]="2">
+
+        </ng2-completer>
+
+    </div>
+    <div class="left inbox">
+        <button (click)="onEnterSearch('click')" class="btn" style="color: silver; outline: none; height: 40px;" >
+           <span class="glyphicon glyphicon-search"></span>
+        </button>
+    </div>
+</div>

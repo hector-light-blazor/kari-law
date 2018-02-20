@@ -1,0 +1,41 @@
+<div id="menuPanel"  [style.width]="width" class="menuPanel" >
+ 
+   <div class="ulmenu">
+       <span *ngIf="onBackArrow" (click)="onClosePanel()" class="barrow pull-right"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span> 
+           <a href="http://www.lrgvdc911.org"><h2>
+               <span style="color:#2196f3">LRGVDC</span>
+               <span style="color:#D32F2F">9-1-1</span>
+           </h2></a>
+
+           
+   </div>
+   
+   <hr>
+   <div>
+       <img src="https://gis.lrgvdc911.org/img/police_badge_32.png">
+       <span id="law" class="lawclass"></span>
+   </div>
+   <div>
+       <img src="https://gis.lrgvdc911.org/img/phone_24.png">
+       &nbsp;&nbsp;<span id="lawphone"></span>
+   </div>
+   <hr>
+   <div>
+       <img src="https://gis.lrgvdc911.org/img/ambulance_32.png">
+       <span id="medical" class="medicalclass"></span>
+   </div>
+   <div>
+       <img src="https://gis.lrgvdc911.org/img/phone_24.png">
+       &nbsp;&nbsp;<span id="medicalphone"></span>
+   </div>
+   <hr>
+   <div>
+       <img src="https://gis.lrgvdc911.org/img/fire_truck_32.png">
+       <span id="fire" class="fireclass"></span>
+   </div>
+   <div>
+       <img src="https://gis.lrgvdc911.org/img/phone_24.png">
+       &nbsp;&nbsp;<span id="firephone"></span>
+   </div>
+<hr>
+</div>

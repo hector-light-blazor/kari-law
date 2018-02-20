@@ -1,0 +1,93 @@
+<div id="menuPanel" [style.width]="width" class="menuPanel" >
+    <button *ngIf="onBtn" type="button" (click)="onClosePanel()" class="btn btn-warning btn-circle" style="position:absolute;margin-left:288px;z-index:1202;"><i class="glyphicon glyphicon-remove"></i></button>
+<div class="ulmenu">
+        <a href="http://www.lrgvdc911.org"><h3>
+            <span style="color:#2196f3">ADDRESS</span>
+            <span style="color:#D32F2F">RESULTS</span>
+        </h3></a>
+</div>
+
+<hr>
+<div class="padding20">
+<div class="panel-group" id="accordion">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse"  href="#collapseAddress">{{"Address - " + addressLength}}</a>
+        </h4>
+    </div>
+    <div id="collapseAddress" class="panel-collapse collapse">
+        <div class="panel-body">
+
+            <div *ngFor="let object of addressData; let i = index;" class="panel">
+                <div class="panel-heading" id="accordion">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse"  href="#collapseAddress{{object.name + i | removeSpaces}}">{{ object.name + " - " + object.data.length}}</a>
+                    </h4>
+                </div>
+                <div id="collapseAddress{{object.name + i | removeSpaces}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item colorB" [ngClass]="{'active': address.selected}" (click)="transformGeometry(address)" *ngFor="let address of object.data">
+                           <span>{{address.address}}</span>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse"  href="#collapseStreet"> {{"Streets - " + streetsLength}}</a>
+        </h4>
+    </div>
+    <div id="collapseStreet" class="panel-collapse collapse">
+        <div class="panel-body">
+
+            <div *ngFor="let object of streetsData; let i = index;" class="panel">
+                <div class="panel-heading" id="accordion">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse"  href="#collapseStreets{{object.name + i | removeSpaces}}">{{ object.name + " - " + object.data.length}}</a>
+                    </h4>
+                </div>
+                <div id="collapseStreets{{object.name + i | removeSpaces}}" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item colorB" [ngClass]="{'active': address.selected}"  (click)="transformGeometry(address)" *ngFor="let address of object.data">{{address.street}}</li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse"  href="#collapseParcels"> {{"Parcels - " + parcelsLength}}</a>
+        </h4>
+    </div>
+    <div id="collapseParcels" class="panel-collapse collapse">
+      <div class="panel-body">
+        <table class="table"  style="padding-left:100px;" cellspacing="0" cellpadding="5" border="0">
+              <tbody>
+                <tr *ngFor="let item of parcelsData.display">
+                <td>{{item.name}}:</td><td>{{item.value}}</td></tr>
+              </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

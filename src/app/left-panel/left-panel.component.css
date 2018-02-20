@@ -1,0 +1,19 @@
+.menuPanel {
+    background-color: white;
+    width: 310px;
+    height: 100%;
+    position: relative;
+    z-index: 1200;
+    float:left;
+    left: 0;
+    margin-left: 0px;
+    border-radius: 1px;
+    overflow: auto;
+    box-shadow: 2px 2px 2px 1px #424242;
+}
+
+.barrow {
+    margin-right: 10px;
+    font-size: 30px;
+}
+

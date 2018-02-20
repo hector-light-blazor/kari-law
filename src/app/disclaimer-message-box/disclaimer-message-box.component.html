@@ -1,0 +1,30 @@
+<div *ngIf="disclaimerOnOff" id="overlay">
+    <div class="panel panel-primary" [ngClass]="{'fullView': fullView}">
+        <div class="panel-heading" style="font-size: 30px; text-align: center;">
+          <img class="pull-left" src="assets/public_safety_logo.png" width="100" height="100" />
+          GIS Data Disclaimer</div>
+        <div class="panel-body" style="height: auto;">
+          <br>
+          <p>
+              The information used in these applications were derived from digital databases in the LRGVDC Emergency Communications.
+              Although we strive to provide the best data we can, we sometimes use data developed by sources outside LRGVDC Emergency Communications.
+              Therefore, LRGVDC Emergency Communications will not accept any responsibility for any errors, omissions, or positional accuracy, and therefore,
+              there are no warranties which accompany this product. Users of the information displayed in this map service
+              are strongly cautioned to verify all information before making any decisions. Please contact us at
+              <a href="tel:9566823481">(956) 682-3481</a>.
+          </p>
+          <div >
+            <div *ngIf="showCheckBox" class="input-group">
+              <span class="input-group-addon">
+                <input (click)="onCheck($event)" type="checkbox" aria-label="Checkbox for following text input">
+                 Don't show again
+              </span>
+            </div>
+              <button *ngIf="showDownloadBtn" (click)="onDownload()" class="btn btn-primary">Download Data</button>
+              <a href="mailto:jgarcia@lrgvdc911.org" class="btn btn-info" >Email Us</a>
+              <button *ngIf="showCloseBtn" (click)="onCancel()" class="btn btn-danger">Close</button>
+              <button *ngIf="showCancelBtn" (click)="onCancel()" class="btn btn-warning">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
