@@ -1,5 +1,5 @@
 <div id="menuPanel" [style.width]="width" class="menuPanel" >
-  <button *ngIf="onBtn" type="button" (click)="onClosePanel()" class="btn btn-warning btn-circle" style="position:absolute;margin-left:288px;z-index:1202;"><i class="glyphicon glyphicon-remove"></i></button>
+  <!-- <button *ngIf="onBtn" type="button" (click)="onClosePanel()" class="btn btn-warning btn-circle" style="position:absolute;margin-left:288px;z-index:1202;"><i class="glyphicon glyphicon-remove"></i></button> -->
 <div class="ulmenu">
       <h3 style="text-align: center">
           <span style="color:#2196f3">Insert</span>
@@ -24,7 +24,7 @@
                     <form>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Date Event</label>
-                          <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <input [(ngModel)]="attributes.date" type="date" name="date" class="form-control">
                           <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                         </div>
                         <div class="form-group">
@@ -63,11 +63,18 @@
                           <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
+                        <button (click)="onCancel()" class="btn btn-danger">Cancel</button>
                       </form>
                 </div>
-                <div class="tab-pane" id="2a">
-                  <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color for the tab</h3>
+                <div class="tab-pane"  style="background: white;" id="2a">
+                     <h3>Total: {{totalItems}}</h3>
+                    <form>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Item Name</label>
+                          <input type="text" name="date" class="form-control">
+                          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                    </form>
                 </div>
               
           </div>

@@ -12,8 +12,9 @@ export class EsriMapComponent implements OnInit {
   // =-=-=-= OUTPUT VARIABLES =-=-=--=
   @Input() layer: string = null;
   @Input() zoom: any = null;
+  @Input() enbEdit: boolean = false;
   @Output() onMapLoaded = new EventEmitter<boolean>();
-
+  @Output() displayForm = new EventEmitter();
   @ViewChild("map") mapObj: ElementRef;
 
   map: any = null;
@@ -171,8 +172,6 @@ export class EsriMapComponent implements OnInit {
         // Listen when all layers are added
         this.map.on('layers-add-result', function(evt) {
 
-           // console.log(_self.wmsLayer.visible);
-
             _self.wmsLayer.hide();
             setTimeout(() => {
               _self.onMapLoaded.emit(true);
@@ -190,176 +189,28 @@ export class EsriMapComponent implements OnInit {
         let layerInfo = new WMTSLayerInfo({ identifier: "texas", tileMatrixSet: '0to20', format: 'png'});
         let options = {serviceMode: 'KVP',visible:'false', layerInfo: layerInfo};
 
-        this.wmsLayer = new WMTSLayer(this.wmtsurl, options); //new WMSLayer(this.wmsurl, {visible: false, format: "png",
+      this.wmsLayer = new WMTSLayer(this.wmtsurl, options); //new WMSLayer(this.wmsurl, {visible: false, format: "png",
 
 
-        this.simpleLayer = new ArcGISDynamicMapServiceLayer(this.mapflexUrl, {visible: false, visibleLayers: [32, 0]});
-        this.simpleLayer.setVisibleLayers([32, 0, 8, 10, 3]);
+      this.simpleLayer = new ArcGISDynamicMapServiceLayer(this.mapflexUrl, {visible: false, visibleLayers: [32, 0]});
+      this.simpleLayer.setVisibleLayers([32, 0, 8, 10, 3]);
         // add layer...
-        this.map.addLayers([this.wmsLayer,this.baseLayer,  this.simpleLayer]);
-        //this.map.addLayer(this.wmsLayer);
-        // this.map.addLayer(this.wmsLayer);
-        // this.map.addLayer(this.simpleLayer);
-
-        // =-=-=-=-= DOWNLOAD SOME INFORMATION TO USE FROM ARC GIS SERVER =-=-=-=-=-=
-        let queryTaskEms = new QueryTask("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/RESPONDERS_POLYGON_DYNAMIC/MapServer/0");
-        let queryTaskFire = new QueryTask("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/RESPONDERS_POLYGON_DYNAMIC/MapServer/1");
-        let queryTaskLaw = new QueryTask("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/RESPONDERS_POLYGON_DYNAMIC/MapServer/2");
-
-        // =-=-=-=-= SETUP QUERY PARAMS  =-=-=-=-=-=-=
-        let queryPara = new Query();
-        queryPara.returnGeometry = true;
-        queryPara.outFields = ["servicenumber", "dispname"];
-        queryPara.where     = "1=1";
-        queryPara.outSpatialReference = this.map.spatialReference;
-
-        // -=-=-=-=-=-=-= DOWNLOAD QUERY TASK FIRE =-=-=-=-=-=-=
-        queryTaskFire.execute(queryPara, function(evt){
-          _self.fireArr = evt.features;
-      }, function(error){
-
-        setTimeout(function() {
-            queryTaskFire.execute(queryPara, function(evt){
-            _self.fireArr = evt.features;
-         });
-        }, 1000);
-
-      });
-
-      queryTaskEms.execute(queryPara, function(evt){
-        _self.emsArr = evt.features;
-      }, function(error){
-
-        setTimeout(function() {
-            queryTaskEms.execute(queryPara, function(evt){
-            _self.emsArr = evt.features;
-          })
-        }, 1000);
-
-      });
-
-      queryTaskLaw.execute(queryPara, function(evt){
-           _self.lawArr = evt.features;
-      }, function(error){
-
-          setTimeout(function() {
-              queryTaskLaw.execute(queryPara, function(evt){
-              _self.lawArr = evt.features;
-           })
-          }, 1000);
-
-      });
-
-      // =-=-=-=- MAP MOUSE LISTENER =-=-=-=-=-=-=-=-=
-      // this.map.on('extent-change', function(evt) {
-      //   console.log(evt);
-      //   if(this.moveCenter) {
-      //     console.log("I AM MOVING");
-      //     this.map.centerAt(this.resizeCenter);
-      //     this.moveCenter = false;
-
-      //   }
-      //   if(evt) {
-
-      //     this.resizeCenter = evt.extent.getCenter();
-      //   }
-
-       
-       
-      //   //this.map.graphics.clear();
-      // });
-
-
+      this.map.addLayers([this.wmsLayer,this.baseLayer,  this.simpleLayer]);
+      
       this.map.on("mouse-move", function(evt){
+          if(_self.enbEdit)  {
+            _self.map.graphics.clear();
+            _self.map.graphics.add(new _self.graphicClass(evt.mapPoint, _self.locationSmb));
+          }
+      });
 
-        if(document.getElementById('medical') !== null){
-          let point = evt.mapPoint;
-
-          // Check that fire information is available
-          if(_self.keepTrack.fire) {
-            // if available does the current point is in a polygon...
-            if(!_self.keepTrack.fire.contains(point)) {
-              _self.fireArr.forEach(element => {
-                if(element.geometry.contains(point)) {
-                  document.getElementById("fire").innerHTML = element.attributes.dispname;
-                  document.getElementById("firephone").innerHTML = element.attributes.servicenumber;
-                  _self.keepTrack.fire = element.geometry;
-                  return;
-                }
-              });
-            }
-            // Check that ems information is available
-            if(_self.keepTrack.ems) {
-              // if available does the current point is in a polygon...
-              if(!_self.keepTrack.ems.contains(point) ) {
-                _self.emsArr.forEach(element => {
-                  if(element.geometry.contains(point)) {
-                    document.getElementById("medical").innerHTML = element.attributes.dispname;
-                    document.getElementById("medicalphone").innerHTML = element.attributes.servicenumber;
-                    _self.keepTrack.ems= element.geometry;
-                    return;
-                  }
-
-              });
-              }
-            }
-            // Check that law information is there
-            if(_self.keepTrack.law) {
-                //If available does the current point is in a polygon..
-              if(!_self.keepTrack.law.contains(point)) {
-                _self.lawArr.forEach(element => {
-                  if(element.geometry.contains(point)) {
-                    document.getElementById("law").innerHTML = element.attributes.dispname;
-                    document.getElementById("lawphone").innerHTML = element.attributes.servicenumber;
-                    _self.keepTrack.law = element.geometry;
-                    return;
-                  }
-                });
-              }
-            }
-          }else {
-
-            // Check if ems arr is any data to loop..
-              if(_self.emsArr) {
-                _self.emsArr.forEach(element => {
-                    if(element.geometry.contains(point)) {
-                      document.getElementById("medical").innerHTML = element.attributes.dispname;
-                      document.getElementById("medicalphone").innerHTML = element.attributes.servicenumber;
-                      _self.keepTrack.ems= element.geometry;
-                      return;
-                    }
-
-                });
-              }
-              // Check if fire arr is any data to loop
-              if(_self.fireArr) {
-                _self.fireArr.forEach(element => {
-                  if(element.geometry.contains(point)) {
-                    document.getElementById("fire").innerHTML = element.attributes.dispname;
-                    document.getElementById("firephone").innerHTML = element.attributes.servicenumber;
-                    _self.keepTrack.fire = element.geometry;
-                    return;
-                  }
-                });
-              }
-
-              // Check if law arr is any data to loop
-              if(_self.lawArr) {
-                _self.lawArr.forEach(element => {
-                  if(element.geometry.contains(point)) {
-                    document.getElementById("law").innerHTML = element.attributes.dispname;
-                    document.getElementById("lawphone").innerHTML = element.attributes.servicenumber;
-                    _self.keepTrack.law = element.geometry;
-                    return;
-                  }
-                });
-              }
-           }
-
+      this.map.on('click', function(evt) {
+        if(_self.enbEdit)  {
+          _self.map.graphics.clear();
+          _self.map.graphics.add(new _self.graphicClass(evt.mapPoint, _self.locationSmb));
+          _self.enbEdit = false;
+          _self.displayForm.emit(true);
         }
-
-
-
       });
 
 

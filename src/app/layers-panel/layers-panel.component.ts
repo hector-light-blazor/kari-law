@@ -8,6 +8,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class LayersPanelComponent implements OnInit {
 
   @Output() layer = new EventEmitter<string>();
+  @Output() enableEdit = new EventEmitter();
   showDis: boolean = null;
   constructor() { }
 
@@ -16,6 +17,10 @@ export class LayersPanelComponent implements OnInit {
 
   onBase() {
     this.layer.emit("base");
+  }
+
+  onEdit() {
+    this.enableEdit.emit(true);
   }
 
   onImagery() {

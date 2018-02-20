@@ -10,6 +10,7 @@ export class AppComponent {
 
   // ------  PRIVATE VARIABLES -------
   show: boolean = false;
+  showInsert: boolean = false;
   ldShow: boolean = true;
   title = 'app';
   onTogglePanel: boolean = true;
@@ -19,6 +20,7 @@ export class AppComponent {
   zoomOptions: any = null;
   cookie: Array<string> = [];
   disclaimerOnOff: boolean = false;
+  enableEdit: boolean = false;
   // ---- LOAD PANEL SERVICE FOR COMMUNICATION BETWEEN PANEL AND HERE -----
   constructor(private _panel: PanelService) {
 
