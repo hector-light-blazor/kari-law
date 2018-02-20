@@ -215,7 +215,7 @@ export class EsriMapComponent implements OnInit {
 
         // create base layers plus imagery layers...
         this.baseLayer = new ArcGISDynamicMapServiceLayer(this.mapflexUrl);
-
+        this.baseLayer.setVisibleLayers([46, 32,  8, 10]);
 
         //this.baseLayer.setVisibleLayers();
         // create wms layer imagery from google
@@ -226,7 +226,7 @@ export class EsriMapComponent implements OnInit {
 
 
       this.simpleLayer = new ArcGISDynamicMapServiceLayer(this.mapflexUrl, {visible: false, visibleLayers: [32, 0]});
-      this.simpleLayer.setVisibleLayers([32, 0, 8, 10, 3]);
+      this.simpleLayer.setVisibleLayers([32, 8, 10]);
         // add layer...
       this.map.addLayers([this.wmsLayer,this.baseLayer,  this.simpleLayer, this.graphicLayer]);
       

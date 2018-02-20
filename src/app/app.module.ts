@@ -20,6 +20,7 @@ import {PanelService} from "./panel.service";
 import { RemoveSpacesPipe } from './remove-spaces.pipe';
 import { DisclaimerMessageBoxComponent } from './disclaimer-message-box/disclaimer-message-box.component';
 import { InsertItemsComponent } from './insert-items/insert-items.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { InsertItemsComponent } from './insert-items/insert-items.component';
     LayersPanelComponent,
     RemoveSpacesPipe,
     DisclaimerMessageBoxComponent,
-    InsertItemsComponent
+    InsertItemsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
