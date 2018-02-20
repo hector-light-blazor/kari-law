@@ -1,7 +1,7 @@
 
 <app-loading *ngIf="ldShow"  ></app-loading>
 <!-- <app-disclaimer-message-box [showCloseBtn]="true" [disclaimerOnOff]="disclaimerOnOff" [showCheckBox]="true" ></app-disclaimer-message-box> -->
-<!-- <app-left-panel *ngIf="!ldShow" ></app-left-panel> Main Left Panel -->
+<app-insert-items></app-insert-items>
 <app-search-toolbar (onTogglePanel)="onPanelChng()" [mobile]="isMobile" (onSelectAddress)="zoomOptions = $event" *ngIf="!ldShow"></app-search-toolbar>
 <app-address-result-panel></app-address-result-panel>
 <app-layers-panel *ngIf="!ldShow" (layer)="selectLayer = $event;"></app-layers-panel>

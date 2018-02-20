@@ -1,3 +1,76 @@
-<p>
-  insert-items works!
-</p>
+<div id="menuPanel" [style.width]="width" class="menuPanel" >
+  <button *ngIf="onBtn" type="button" (click)="onClosePanel()" class="btn btn-warning btn-circle" style="position:absolute;margin-left:288px;z-index:1202;"><i class="glyphicon glyphicon-remove"></i></button>
+<div class="ulmenu">
+      <h3 style="text-align: center">
+          <span style="color:#2196f3">Insert</span>
+          <span style="color:#D32F2F">Information</span>
+      </h3>
+</div>
+
+<hr>
+<div class="padding20">
+    <div id="exTab1" class="container">	
+            <ul  class="nav nav-pills">
+              <li class="active">
+                <a  href="#1a" data-toggle="tab">Main</a>
+              </li>
+              <li>
+                <a href="#2a" data-toggle="tab">Add Items</a>
+              </li>
+            </ul>
+        
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" style="background: white;" id="1a">
+                    <form>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Date Event</label>
+                          <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Bussiness Name</label>
+                          <input type="text" class="form-control" id="exampleInputPassword1" >
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Contact Name</label>
+                          <input type="text" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Phone</label>
+                          <input type="text" class="form-control" id="exampleInputPassword1" >
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Email address</label>
+                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+                        
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Address</label>
+                          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+                         
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">City</label>
+                          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+                        
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">State</label>
+                          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">ZipCode</label>
+                          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-danger">Cancel</button>
+                      </form>
+                </div>
+                <div class="tab-pane" id="2a">
+                  <h3>We use the class nav-pills instead of nav-tabs which automatically creates a background color for the tab</h3>
+                </div>
+              
+          </div>
+
+</div>
+</div>
