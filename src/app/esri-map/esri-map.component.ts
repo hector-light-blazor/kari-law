@@ -126,11 +126,11 @@ export class EsriMapComponent implements OnInit {
   createMap() {
       let _self = this;
       this.esriLoader.loadModules(['esri/map', "esri/Color", "esri/config", "esri/graphic",
-      'esri/layers/ArcGISDynamicMapServiceLayer','esri/layers/WMTSLayer','esri/layers/WMTSLayerInfo', 'esri/layers/WMSLayer',"esri/geometry/Circle",
+      'esri/layers/ArcGISDynamicMapServiceLayer','esri/layers/WMTSLayer','esri/layers/WMTSLayerInfo', 'esri/layers/WMSLayer',"esri/geometry/webMercatorUtils", "esri/geometry/Circle",
        "esri/geometry/Point", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol","esri/tasks/query", "esri/tasks/QueryTask", "dojo/_base/lang",
        "dojox/gfx/fx",]).then((
          [Map,Color, esriConfig, Graphic,
-        ArcGISDynamicMapServiceLayer,WMTSLayer, WMTSLayerInfo, WMSLayer, Circle, Point, SimpleMarkerSymbol, SimpleLineSymbol, Query , QueryTask, lang, fx]) => {
+        ArcGISDynamicMapServiceLayer,WMTSLayer, WMTSLayerInfo, WMSLayer,webMercatorUtils, Circle, Point, SimpleMarkerSymbol, SimpleLineSymbol, Query , QueryTask, lang, fx]) => {
 
         esriConfig.defaults.io.proxyUrl = "https://gis.lrgvdc911.org/DotNet/proxy.ashx?";
 
@@ -209,7 +209,9 @@ export class EsriMapComponent implements OnInit {
           _self.map.graphics.clear();
           _self.map.graphics.add(new _self.graphicClass(evt.mapPoint, _self.locationSmb));
           _self.enbEdit = false;
-          _self.displayForm.emit(true);
+          let point = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
+          
+          _self.displayForm.emit(point);
         }
       });
 

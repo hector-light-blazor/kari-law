@@ -1,8 +1,8 @@
 
 <app-loading *ngIf="ldShow"  ></app-loading>
 <!-- <app-disclaimer-message-box [showCloseBtn]="true" [disclaimerOnOff]="disclaimerOnOff" [showCheckBox]="true" ></app-disclaimer-message-box> -->
-<app-insert-items *ngIf="showInsert" (closePanel)="showInsert = false"></app-insert-items>
+<app-insert-items *ngIf="showInsert" [point]="point" (closePanel)="showInsert = false"></app-insert-items>
 <app-search-toolbar (onTogglePanel)="onPanelChng()" [mobile]="isMobile" (onSelectAddress)="zoomOptions = $event" *ngIf="!ldShow"></app-search-toolbar>
 <app-address-result-panel></app-address-result-panel>
 <app-layers-panel *ngIf="!ldShow" (enableEdit)="enableEdit = (enableEdit) ? false : true" (layer)="selectLayer = $event;"></app-layers-panel>
-<app-esri-map (displayForm)="showInsert = true;" [enbEdit]="enableEdit" [zoom]="zoomOptions" [layer]="selectLayer" (onMapLoaded)="ldShow = false;onMapHello();"></app-esri-map>
+<app-esri-map (displayForm)="showInsert = true; point = $event;" [enbEdit]="enableEdit" [zoom]="zoomOptions" [layer]="selectLayer" (onMapLoaded)="ldShow = false;onMapHello();"></app-esri-map>

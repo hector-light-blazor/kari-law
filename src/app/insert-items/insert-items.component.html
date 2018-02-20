@@ -24,45 +24,50 @@
                     <form>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Date Event</label>
-                          <input [(ngModel)]="attributes.date" type="date" name="date" class="form-control">
-                          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                          <input  [ngClass]="{'has-error': dateError}"  [(ngModel)]="attributes.date" type="date" name="date" class="form-control">
+                          <small *ngIf="dateError"  class="form-text text-muted">Please enter date.</small>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Bussiness Name</label>
-                          <input type="text" class="form-control" id="exampleInputPassword1" >
+                          <input  [ngClass]="{'has-error': bNameError}" [(ngModel)]="attributes.bus_name" type="text" class="form-control" name="bus_name" >
+                          <small *ngIf="bNameError" class="form-text text-muted">Please enter bussiness name.</small>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Contact Name</label>
-                          <input type="text" class="form-control" id="exampleInputPassword1">
+                          <input  [ngClass]="{'has-error': cNameError}" [(ngModel)]="attributes.contact_name" type="text" class="form-control" name="con_name">
+                          <small *ngIf="cNameError" class="form-text text-muted">Please enter contact name.</small>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Phone</label>
-                          <input type="text" class="form-control" id="exampleInputPassword1" >
+                          <input  [ngClass]="{'has-error': phoneError}" [(ngModel)]="attributes.phone" type="text" class="form-control" name="phone" >
+                          <small *ngIf="phoneError" class="form-text text-muted">Please enter phone.</small>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Email address</label>
-                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
-                        
+                          <input  [ngClass]="{'has-error': emailError}" [(ngModel)]="attributes.email" type="email" class="form-control" name="email" >
+                          <small *ngIf="emailError" class="form-text text-muted">Please enter email address.</small>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">Address</label>
-                          <input type="text" class="form-control"  >
-                         
+                          <input  [ngClass]="{'has-error': addressError}" [(ngModel)]="attributes.address" type="text" class="form-control" name="address"  >
+                          <small *ngIf="addressError"  class="form-text text-muted">Please enter address.</small>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">City</label>
-                          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
-                        
+                          <input  [ngClass]="{'has-error': cityError}" [(ngModel)]="attributes.city" type="text" class="form-control" name="city" >
+                          <small *ngIf="cityError"  class="form-text text-muted">Please enter city.</small>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">State</label>
-                          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+                          <input  [ngClass]="{'has-error': stateError}" [(ngModel)]="attributes.state" type="text" class="form-control" name="state" >
+                          <small *ngIf="stateError"  class="form-text text-muted">Please enter state.</small>
                         </div>
                         <div class="form-group">
                           <label for="exampleInputEmail1">ZipCode</label>
-                          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <input  [ngClass]="{'has-error': zipCodeError}" [(ngModel)]="attributes.zipcode" type="text" class="form-control" name="zipcode">
+                          <small *ngIf="zipCodeError"  class="form-text text-muted">Please enter zipCode.</small>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" (click)="onSubmit()" class="btn btn-primary">Submit</button>
                         <button (click)="onCancel()" class="btn btn-danger">Cancel</button>
                       </form>
                 </div>

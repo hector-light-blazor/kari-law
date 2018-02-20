@@ -21,6 +21,7 @@ export class AppComponent {
   cookie: Array<string> = [];
   disclaimerOnOff: boolean = false;
   enableEdit: boolean = false;
+  point: any = null;
   // ---- LOAD PANEL SERVICE FOR COMMUNICATION BETWEEN PANEL AND HERE -----
   constructor(private _panel: PanelService) {
 
