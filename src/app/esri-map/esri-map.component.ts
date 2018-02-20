@@ -12,6 +12,7 @@ export class EsriMapComponent implements OnInit {
   // =-=-=-= OUTPUT VARIABLES =-=-=--=
   @Input() layer: string = null;
   @Input() zoom: any = null;
+  @Input() clearMap: boolean = false;
   @Input() enbEdit: boolean = false;
   @Output() onMapLoaded = new EventEmitter<boolean>();
   @Output() displayForm = new EventEmitter();
@@ -37,7 +38,7 @@ export class EsriMapComponent implements OnInit {
   symbolClass: any = null;
   locationSmb: any = null;
   symbolLineOne: any = null;
-
+  graphicLayer: any = null;
   // Graphic Object
   graphicClass: any = null;
   graphic: any = null;
@@ -51,6 +52,10 @@ export class EsriMapComponent implements OnInit {
   fireArr = [];
   resizeCenter: any = null;
   moveCenter:boolean = false;
+  extendOld: any = null;
+  locDiamond: any = null;
+
+
   // ..keep track mouse clicks..
   keepTrack: any = {fire: null, ems: null, law: null};
 
@@ -120,20 +125,25 @@ export class EsriMapComponent implements OnInit {
 
       this.zoom = null;
     }
+
+    if(this.clearMap) {
+      this.map.graphics.clear();
+    }
   }
 
 
   createMap() {
       let _self = this;
-      this.esriLoader.loadModules(['esri/map', "esri/Color", "esri/config", "esri/graphic",
+      this.esriLoader.loadModules(['esri/map', "esri/Color", "esri/config", "esri/graphic","esri/layers/GraphicsLayer",
       'esri/layers/ArcGISDynamicMapServiceLayer','esri/layers/WMTSLayer','esri/layers/WMTSLayerInfo', 'esri/layers/WMSLayer',"esri/geometry/webMercatorUtils", "esri/geometry/Circle",
        "esri/geometry/Point", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol","esri/tasks/query", "esri/tasks/QueryTask", "dojo/_base/lang",
        "dojox/gfx/fx",]).then((
-         [Map,Color, esriConfig, Graphic,
+         [Map,Color, esriConfig, Graphic,GraphicsLayer,
         ArcGISDynamicMapServiceLayer,WMTSLayer, WMTSLayerInfo, WMSLayer,webMercatorUtils, Circle, Point, SimpleMarkerSymbol, SimpleLineSymbol, Query , QueryTask, lang, fx]) => {
 
         esriConfig.defaults.io.proxyUrl = "https://gis.lrgvdc911.org/DotNet/proxy.ashx?";
-
+        
+        this.graphicLayer = new GraphicsLayer({id: "kari"});
         this.graphicClass = Graphic;
         this.circleClass = Circle;
         this.pointClass = new Point();
@@ -145,6 +155,11 @@ export class EsriMapComponent implements OnInit {
           new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
           new Color([1,1,1]), 3),
           new Color([220,20,60])); // Change the color to crimson from blueish...
+
+          this.locDiamond = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_DIAMOND, 14,
+            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+            new Color([1,1,1]), 3),
+            new Color([220,20,60])); // Change the color to crimson from blueish...
 
           this.symbolLineOne = new SimpleLineSymbol({
             "type": "esriSLS",
@@ -167,6 +182,24 @@ export class EsriMapComponent implements OnInit {
 
           _self.autoRecenter();
           _self.wmsLayer.hide();
+        })
+
+        this.map.on('extent-change', response => {
+            let extent = webMercatorUtils.webMercatorToGeographic(response.extent);
+            
+            if(this.extendOld) {
+    
+              if(this.extendOld.xmin != extent.xmin && this.extendOld.ymin != extent.ymin && this.extendOld.xmax != extent.xmax && this.extendOld.ymax != extent.ymax) {
+                  
+                this.getKariLayer(extent.xmin, extent.ymin, extent.xmax, extent.ymax);
+              }
+    
+          }else {
+             this.getKariLayer(extent.xmin, extent.ymin, extent.xmax, extent.ymax);
+          }
+          console.log("I AM RUNNING");
+          // .. GET THE OLD EXTENT NO MATTER WHAT ...
+          this.extendOld = extent; 
         })
 
         // Listen when all layers are added
@@ -195,7 +228,7 @@ export class EsriMapComponent implements OnInit {
       this.simpleLayer = new ArcGISDynamicMapServiceLayer(this.mapflexUrl, {visible: false, visibleLayers: [32, 0]});
       this.simpleLayer.setVisibleLayers([32, 0, 8, 10, 3]);
         // add layer...
-      this.map.addLayers([this.wmsLayer,this.baseLayer,  this.simpleLayer]);
+      this.map.addLayers([this.wmsLayer,this.baseLayer,  this.simpleLayer, this.graphicLayer]);
       
       this.map.on("mouse-move", function(evt){
           if(_self.enbEdit)  {
@@ -217,6 +250,24 @@ export class EsriMapComponent implements OnInit {
 
 
     })
+ }
+
+ getKariLayer(xmin, ymin, xmax, ymax) {
+  this.graphicLayer.clear();
+    this._appService.POST_METHOD("handle/getBoxKari/", {data: { 
+      xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax}}).subscribe((response: any) => {
+          console.log(response);
+          if(response.success) {
+
+            response.data.forEach(element => {
+              this.pointClass.setX(element.x);
+              this.pointClass.setY(element.y);
+              this.graphicLayer.add(new this.graphicClass(this.pointClass, this.locDiamond));
+            });
+           
+          }
+      });
+
  }
 
 // .... On Zoom Based on geometry ...

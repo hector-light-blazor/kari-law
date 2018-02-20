@@ -133,8 +133,16 @@ export class InsertItemsComponent implements OnInit {
          
         return;
       }
-      
+       
+      let total = 0;
        this.attributes.items.push({name: this.itemname, qty: this.itemqty});
+
+       this.attributes.items.forEach(element => {
+          total += +element.qty;
+       });
+
+       this.totalItems = total;
+
        this.itemname = '';
        this.itemqty = 0;
     
@@ -145,6 +153,15 @@ export class InsertItemsComponent implements OnInit {
 
     console.log(index);
     this.attributes.items.splice(index, 1);
+
+    let total = 0;
+  
+
+    this.attributes.items.forEach(element => {
+       total += +element.qty;
+    });
+
+    this.totalItems = total;
   }
 
 }
