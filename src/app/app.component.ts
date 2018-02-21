@@ -14,6 +14,7 @@ export class AppComponent {
   showLayers: boolean = false;
   toolbarShow: boolean = false;
   ldShow: boolean = false;
+  lgShow:boolean = true;
   title = 'app';
   onTogglePanel: boolean = true;
   isMobile: boolean = true;

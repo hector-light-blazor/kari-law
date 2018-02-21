@@ -10,12 +10,12 @@
                   <form accept-charset="UTF-8" role="form">
                           <fieldset>
                       <div class="form-group">
-                        <input class="form-control" placeholder="E-mail" name="email" type="text">
+                        <input class="form-control" [(ngModel)]="username" placeholder="E-mail" name="email" type="text">
                     </div>
                     <div class="form-group">
-                      <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                      <input (keyup.enter)="onLogin()" class="form-control"  [(ngModel)]="pass" placeholder="Password" name="password" type="password" value="">
                     </div>
-                    <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                    <input (click)="onLogin()" class="btn btn-lg btn-success btn-block" type="submit" value="Login">
                   </fieldset>
                     </form>
                 </div>

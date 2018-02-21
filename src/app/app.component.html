@@ -1,4 +1,4 @@
-<app-login></app-login>
+<app-login *ngIf="lgShow" (closeLogin)="lgShow=false;toolbarShow = true; showLayers = true;"></app-login>
 <app-loading *ngIf="ldShow"  ></app-loading>
 <!-- <app-disclaimer-message-box [showCloseBtn]="true" [disclaimerOnOff]="disclaimerOnOff" [showCheckBox]="true" ></app-disclaimer-message-box> -->
 <app-insert-items *ngIf="showInsert" [point]="point" (closePanel)="showInsert = false; clMap = true;enableEdit = false;"></app-insert-items>
