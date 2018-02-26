@@ -176,6 +176,8 @@ export class EsriMapComponent implements OnInit {
         });
 
 
+        this.map.disableKeyboardNavigation();
+
 
         // provide listeners to map functions ....
         this.map.on("load", function() {
@@ -215,7 +217,7 @@ export class EsriMapComponent implements OnInit {
 
         // create base layers plus imagery layers...
         this.baseLayer = new ArcGISDynamicMapServiceLayer(this.mapflexUrl);
-        this.baseLayer.setVisibleLayers([46, 32,  8, 10]);
+        this.baseLayer.setVisibleLayers([46, 45, 32,  8, 10]);
 
         //this.baseLayer.setVisibleLayers();
         // create wms layer imagery from google
