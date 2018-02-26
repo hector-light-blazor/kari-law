@@ -68,7 +68,8 @@
                           <small *ngIf="zipCodeError"  class="form-text text-muted">Please enter zipCode.</small>
                         </div>
                         <button type="submit" (click)="onSubmit()" class="btn btn-primary">Submit</button>
-                        <button (click)="onCancel()" class="btn btn-danger">Cancel</button>
+                        <button (click)="onCancel()" class="btn btn-warning">Cancel</button>
+                        <button (click)="onDelete()" class="btn btn-danger">Delete</button>
                       </form>
                 </div>
                 <div class="tab-pane"  style="background: white;" id="2a">

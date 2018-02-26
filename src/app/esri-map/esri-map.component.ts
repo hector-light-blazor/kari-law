@@ -250,6 +250,11 @@ export class EsriMapComponent implements OnInit {
         }
       });
 
+      this.graphicLayer.on('click', results => {
+          console.log(results);
+          results.mapPoint = webMercatorUtils.webMercatorToGeographic(results.mapPoint);
+          this.displayForm.emit({data: results});
+      });
 
     })
  }
@@ -264,7 +269,7 @@ export class EsriMapComponent implements OnInit {
             response.data.forEach(element => {
               this.pointClass.setX(element.x);
               this.pointClass.setY(element.y);
-              this.graphicLayer.add(new this.graphicClass(this.pointClass, this.locDiamond));
+              this.graphicLayer.add(new this.graphicClass(this.pointClass, this.locDiamond, element));
             });
            
           }

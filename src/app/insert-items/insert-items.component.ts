@@ -8,7 +8,7 @@ import {AppService} from "../app.service";
 })
 export class InsertItemsComponent implements OnInit {
   @Input() point: any = null;
-  attributes: LOCATIONS = {date: null, items: []};
+  attributes: LOCATIONS = {date: null, items: [], state: "TX"};
   totalItems: number = 0;
   itemname: string = '';
   itemqty: number = 0;
@@ -27,12 +27,32 @@ export class InsertItemsComponent implements OnInit {
   // Error for Inserting Items
   itemNameError: boolean = false;
   itemQTYError: boolean = false;
-
+  updateForm: boolean = false;
+  lawid: string = "";
   @Output() closePanel = new EventEmitter();
   constructor(private app:AppService) { }
 
   ngOnInit() {
-    
+    console.log(this.point);
+
+    if(this.point.hasOwnProperty('data')) {
+       console.log(this.point);
+       this.updateForm = true;
+       if(this.point.data.graphic.attributes.items) {
+         this.attributes.items = JSON.parse(this.point.data.graphic.attributes.items); // Convert string to json array..
+       }
+       this.attributes.date = this.point.data.graphic.attributes.dte;
+       this.attributes.address = this.point.data.graphic.attributes.address;
+       this.attributes.bus_name = this.point.data.graphic.attributes.bus_name;
+       this.attributes.city = this.point.data.graphic.attributes.city;
+       this.attributes.email = this.point.data.graphic.attributes.email;
+       this.attributes.phone = this.point.data.graphic.attributes.phone;
+       this.attributes.contact_name = this.point.data.graphic.attributes.contact_name;
+       this.attributes.zipcode = this.point.data.graphic.attributes.zipcode;
+       this.lawid = this.point.data.graphic.attributes.id;
+       this.point = this.point.mapPoint;
+    }
+    //Fetch Data from this id.. 
   }
 
   onSubmit() {
@@ -100,15 +120,33 @@ export class InsertItemsComponent implements OnInit {
       console.log(this.attributes);
       console.log(this.point);
 
-      this.app.POST_METHOD("handle/obj/", this.attributes).subscribe((response:any) => {
-         console.log(response);
-         if(response.answer){
-           this.onCancel();
-         }else {
-           alert("Error Saving");
-         }
-      });
+      if(this.updateForm) {
+        this.app.POST_METHOD('handle/updateKari/', {data: this.attributes}).subscribe((response:any) => {
+            console.log(response);
+            
+        });
+      }else { // Handles Insert New Item..
+        this.app.POST_METHOD("handle/obj/", this.attributes).subscribe((response:any) => {
+          console.log(response);
+          if(response.answer){
+            this.onCancel();
+          }else {
+            alert("Error Saving");
+          }
+       });
+      }
+     
 
+  }
+
+  onDelete() {
+    let answer = confirm("Are you sure want to delete record!");
+    if(answer) {
+        this.app.POST_METHOD("handle/deleteKari/", {data: this.lawid}).subscribe((response:any) => {
+          console.log(response);
+          this.closePanel.emit(true);
+      }); 
+    }
   }
 
   onCancel() {
@@ -182,6 +220,7 @@ interface LOCATIONS {
 }
 
 interface LISTITEMS {
+  lawid?: string;
   name?: string;
   qty?: number;
 }
