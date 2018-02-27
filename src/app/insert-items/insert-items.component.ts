@@ -39,7 +39,13 @@ export class InsertItemsComponent implements OnInit {
        // console.log(this.point);
        this.updateForm = true;
        if(this.point.data.graphic.attributes.items) {
-         this.attributes.items = JSON.parse(this.point.data.graphic.attributes.items); // Convert string to json array..
+        let total = 0;
+        this.attributes.items = JSON.parse(this.point.data.graphic.attributes.items); // Convert string to json array..
+        
+         this.attributes.items.forEach(element => {
+            total += +element.qty;
+         });
+         this.totalItems = total; // total items
        }
        this.attributes.date = this.point.data.graphic.attributes.dte;
        this.attributes.address = this.point.data.graphic.attributes.address;
@@ -151,7 +157,13 @@ export class InsertItemsComponent implements OnInit {
   }
 
   onCancel() {
-    this.closePanel.emit(true);
+    let self = this;
+    this.closePanel.emit(false);
+
+    setTimeout(() => {
+      self.closePanel.emit(true);
+    }, 300);
+    
   }
 
   onAddItem() {
