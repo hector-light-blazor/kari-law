@@ -131,6 +131,7 @@ export class EsriMapComponent implements OnInit {
       this.graphicLayer.clear();
       this.getKariLayer(this.extendOld.xmin, this.extendOld.ymin, this.extendOld.xmax, this.extendOld.ymax);
       this.clearMap = false;
+      this.clearMap = null;
     }
   }
 
@@ -202,7 +203,7 @@ export class EsriMapComponent implements OnInit {
           }else {
              this.getKariLayer(extent.xmin, extent.ymin, extent.xmax, extent.ymax);
           }
-          console.log("I AM RUNNING");
+        
           // .. GET THE OLD EXTENT NO MATTER WHAT ...
           this.extendOld = extent; 
         })
@@ -254,7 +255,7 @@ export class EsriMapComponent implements OnInit {
       });
 
       this.graphicLayer.on('click', results => {
-          console.log(results);
+        
           results.mapPoint = webMercatorUtils.webMercatorToGeographic(results.mapPoint);
           this.displayForm.emit({data: results});
       });
@@ -266,7 +267,7 @@ export class EsriMapComponent implements OnInit {
   this.graphicLayer.clear();
     this._appService.POST_METHOD("handle/getBoxKari/", {data: { 
       xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax}}).subscribe((response: any) => {
-          console.log(response);
+       
           if(response.success) {
 
             response.data.forEach(element => {

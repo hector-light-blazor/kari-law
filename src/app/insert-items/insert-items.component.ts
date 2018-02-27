@@ -33,10 +33,10 @@ export class InsertItemsComponent implements OnInit {
   constructor(private app:AppService) { }
 
   ngOnInit() {
-    console.log(this.point);
+    // console.log(this.point);
 
     if(this.point.hasOwnProperty('data')) {
-       console.log(this.point);
+       // console.log(this.point);
        this.updateForm = true;
        if(this.point.data.graphic.attributes.items) {
          this.attributes.items = JSON.parse(this.point.data.graphic.attributes.items); // Convert string to json array..
@@ -144,7 +144,7 @@ export class InsertItemsComponent implements OnInit {
     let answer = confirm("Are you sure want to delete record!");
     if(answer) {
         this.app.POST_METHOD("handle/deleteKari/", {data: this.attributes.lawid}).subscribe((response:any) => {
-          console.log(response);
+          // console.log(response);
           this.closePanel.emit(true);
       }); 
     }
@@ -190,7 +190,7 @@ export class InsertItemsComponent implements OnInit {
 
   onRemoveItem(index) {
 
-    console.log(index);
+    // console.log(index);
     this.attributes.items.splice(index, 1);
 
     let total = 0;
