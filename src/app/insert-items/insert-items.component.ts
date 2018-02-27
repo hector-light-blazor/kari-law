@@ -50,7 +50,7 @@ export class InsertItemsComponent implements OnInit {
        this.attributes.contact_name = this.point.data.graphic.attributes.contact_name;
        this.attributes.zipcode = this.point.data.graphic.attributes.zipcode;
        this.lawid = this.point.data.graphic.attributes.id;
-       this.point = this.point.data.mapPoint;
+       this.point = this.point.data.mapPoint; 
     }
     //Fetch Data from this id.. 
   }
