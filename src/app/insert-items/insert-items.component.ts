@@ -28,7 +28,7 @@ export class InsertItemsComponent implements OnInit {
   itemNameError: boolean = false;
   itemQTYError: boolean = false;
   updateForm: boolean = false;
-  lawid: string = "";
+
   @Output() closePanel = new EventEmitter();
   constructor(private app:AppService) { }
 
@@ -49,7 +49,7 @@ export class InsertItemsComponent implements OnInit {
        this.attributes.phone = this.point.data.graphic.attributes.phone;
        this.attributes.contact_name = this.point.data.graphic.attributes.contact_name;
        this.attributes.zipcode = this.point.data.graphic.attributes.zipcode;
-       this.lawid = this.point.data.graphic.attributes.id;
+       this.attributes.lawid = this.point.data.graphic.attributes.id;
        this.point = this.point.data.mapPoint; 
     }
     //Fetch Data from this id.. 
@@ -143,7 +143,7 @@ export class InsertItemsComponent implements OnInit {
   onDelete() {
     let answer = confirm("Are you sure want to delete record!");
     if(answer) {
-        this.app.POST_METHOD("handle/deleteKari/", {data: this.lawid}).subscribe((response:any) => {
+        this.app.POST_METHOD("handle/deleteKari/", {data: this.attributes.lawid}).subscribe((response:any) => {
           console.log(response);
           this.closePanel.emit(true);
       }); 
@@ -174,7 +174,7 @@ export class InsertItemsComponent implements OnInit {
       }
        
       let total = 0;
-       this.attributes.items.push({name: this.itemname, qty: this.itemqty});
+       this.attributes.items.push({item_name: this.itemname, qty: this.itemqty});
 
        this.attributes.items.forEach(element => {
           total += +element.qty;
@@ -206,6 +206,7 @@ export class InsertItemsComponent implements OnInit {
 }
 
 interface LOCATIONS {
+   lawid?: string;
    date?: Date;
    bus_name?: string;
    contact_name?: string;
@@ -222,6 +223,6 @@ interface LOCATIONS {
 
 interface LISTITEMS {
   lawid?: string;
-  name?: string;
+  item_name?: string;
   qty?: number;
 }
