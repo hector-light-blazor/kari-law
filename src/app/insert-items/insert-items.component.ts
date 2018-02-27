@@ -50,7 +50,7 @@ export class InsertItemsComponent implements OnInit {
        this.attributes.contact_name = this.point.data.graphic.attributes.contact_name;
        this.attributes.zipcode = this.point.data.graphic.attributes.zipcode;
        this.lawid = this.point.data.graphic.attributes.id;
-       this.point = this.point.mapPoint;
+       this.point = this.point.data.mapPoint;
     }
     //Fetch Data from this id.. 
   }
@@ -121,6 +121,7 @@ export class InsertItemsComponent implements OnInit {
       console.log(this.point);
 
       if(this.updateForm) {
+        console.log("GOINT TO UPDATE FORM");
         this.app.POST_METHOD('handle/updateKari/', {data: this.attributes}).subscribe((response:any) => {
             console.log(response);
             
