@@ -117,18 +117,18 @@ export class InsertItemsComponent implements OnInit {
       }
       this.attributes.x = this.point.x;
       this.attributes.y = this.point.y;
-      console.log(this.attributes);
-      console.log(this.point);
+    
 
       if(this.updateForm) {
-        console.log("GOINT TO UPDATE FORM");
+       
         this.app.POST_METHOD('handle/updateKari/', {data: this.attributes}).subscribe((response:any) => {
-            console.log(response);
+           
+            this.onCancel();
             
         });
       }else { // Handles Insert New Item..
         this.app.POST_METHOD("handle/obj/", this.attributes).subscribe((response:any) => {
-          console.log(response);
+         
           if(response.answer){
             this.onCancel();
           }else {

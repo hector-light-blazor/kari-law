@@ -128,6 +128,9 @@ export class EsriMapComponent implements OnInit {
 
     if(this.clearMap) {
       this.map.graphics.clear();
+      this.graphicLayer.clear();
+      this.getKariLayer(this.extendOld.xmin, this.extendOld.ymin, this.extendOld.xmax, this.extendOld.ymax);
+      this.clearMap = false;
     }
   }
 
